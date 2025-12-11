@@ -1,0 +1,39 @@
+name: "Code Generator"
+description: "Generates code examples for programming concepts"
+input_schema:
+  type: "object"
+  properties:
+    concept:
+      type: "string"
+      description: "The programming concept to demonstrate"
+    language:
+      type: "string"
+      description: "Programming language for the example"
+    complexity:
+      type: "string"
+      enum: ["basic", "intermediate", "advanced"]
+      description: "Complexity level of the code example"
+  required: ["concept", "language"]
+output_schema:
+  type: "object"
+  properties:
+    code_example:
+      type: "string"
+      description: "Generated code example with comments"
+implementation:
+  system_prompt: |
+    You are an expert programmer and educator. Your task is to generate clear, educational code examples.
+    
+    Guidelines:
+    - Write clean, well-commented code
+    - Adapt complexity to the specified level:
+      * basic: Simple syntax, minimal concepts, extensive comments
+      * intermediate: Multiple concepts, moderate complexity, balanced comments
+      * advanced: Complex patterns, optimizations, concise comments
+    - Include explanatory comments
+    - Follow language best practices
+    - Ensure code is executable (when possible)
+  user_prompt_template: |
+    Generate a {{complexity}} level code example in {{language}} demonstrating:
+    
+    {{concept}}

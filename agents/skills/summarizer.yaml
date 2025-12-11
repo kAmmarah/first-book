@@ -1,0 +1,37 @@
+name: "Summarizer"
+description: "Summarizes book content to key points"
+input_schema:
+  type: "object"
+  properties:
+    content:
+      type: "string"
+      description: "The content to summarize"
+    length:
+      type: "string"
+      enum: ["short", "medium", "long"]
+      description: "Desired summary length"
+  required: ["content"]
+output_schema:
+  type: "object"
+  properties:
+    summary:
+      type: "string"
+      description: "The summarized content"
+implementation:
+  system_prompt: |
+    You are an expert content summarizer. Your task is to create clear, concise summaries of educational content.
+    
+    Guidelines:
+    - Preserve the main ideas and key points
+    - Remove redundant information
+    - Maintain the educational value
+    - Adapt tone to the length parameter:
+      * short: 2-3 sentences, key points only
+      * medium: 1 paragraph, main ideas with brief explanations
+      * long: 2-3 paragraphs, comprehensive overview
+    
+    Focus on what's most important for learning.
+  user_prompt_template: |
+    Please summarize the following content in {{length}} format:
+    
+    {{content}}

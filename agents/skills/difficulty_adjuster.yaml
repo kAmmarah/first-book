@@ -1,0 +1,53 @@
+name: "Difficulty Adjuster"
+description: "Adjusts content difficulty based on user profile"
+input_schema:
+  type: "object"
+  properties:
+    content:
+      type: "string"
+      description: "The content to adjust"
+    software_experience:
+      type: "string"
+      enum: ["beginner", "intermediate", "advanced"]
+      description: "User's software experience level"
+    hardware_experience:
+      type: "string"
+      enum: ["beginner", "intermediate", "advanced"]
+      description: "User's hardware experience level"
+    learning_style:
+      type: "string"
+      enum: ["visual", "auditory", "kinesthetic", "reading/writing"]
+      description: "User's preferred learning style"
+  required: ["content", "software_experience", "hardware_experience", "learning_style"]
+output_schema:
+  type: "object"
+  properties:
+    adjusted_content:
+      type: "string"
+      description: "Content adjusted for user's profile"
+implementation:
+  system_prompt: |
+    You are an expert content adapter. Your task is to adjust educational content to match a learner's profile.
+    
+    Guidelines:
+    - For software experience:
+      * beginner: Simplify technical terms, add explanations, reduce complexity
+      * intermediate: Include some technical depth, assume basic knowledge
+      * advanced: Use domain terminology, include advanced concepts
+    - For hardware experience:
+      * beginner: Avoid complex setup instructions, provide alternatives
+      * intermediate: Include moderate setup details
+      * advanced: Include detailed technical specifications
+    - For learning styles:
+      * visual: Add descriptive imagery, diagrams (described in text)
+      * auditory: Include discussion points, sound-based analogies
+      * kinesthetic: Add hands-on activities, interactive elements
+      * reading/writing: Expand on textual explanations, add reflective questions
+  user_prompt_template: |
+    Adjust the following content for a learner with:
+    - Software Experience: {{software_experience}}
+    - Hardware Experience: {{hardware_experience}}
+    - Learning Style: {{learning_style}}
+    
+    Content to adjust:
+    {{content}}

@@ -1,0 +1,34 @@
+name: "Translator"
+description: "Translates content between languages"
+input_schema:
+  type: "object"
+  properties:
+    text:
+      type: "string"
+      description: "Text to translate"
+    source_language:
+      type: "string"
+      description: "Source language code (e.g., 'en')"
+    target_language:
+      type: "string"
+      description: "Target language code (e.g., 'ur' for Urdu)"
+  required: ["text", "target_language"]
+output_schema:
+  type: "object"
+  properties:
+    translated_text:
+      type: "string"
+      description: "Translated text"
+implementation:
+  system_prompt: |
+    You are an expert translator specializing in educational content.
+    
+    Guidelines:
+    - Maintain the meaning and tone of the original content
+    - Preserve technical terms when appropriate, or provide accurate translations
+    - Adapt to cultural context when necessary
+    - Keep formatting and structure consistent
+  user_prompt_template: |
+    Translate the following text from {{source_language|default:"English"}} to {{target_language}}:
+    
+    {{text}}

@@ -1,0 +1,35 @@
+name: "Explainer"
+description: "Explains complex concepts in simpler terms"
+input_schema:
+  type: "object"
+  properties:
+    concept:
+      type: "string"
+      description: "The concept to explain"
+    audience_level:
+      type: "string"
+      enum: ["beginner", "intermediate", "advanced"]
+      description: "Target audience experience level"
+  required: ["concept", "audience_level"]
+output_schema:
+  type: "object"
+  properties:
+    explanation:
+      type: "string"
+      description: "The simplified explanation"
+implementation:
+  system_prompt: |
+    You are an expert educator skilled at explaining complex concepts in simple, accessible terms.
+    
+    Guidelines:
+    - Adapt explanations to the audience level:
+      * beginner: Use everyday analogies, avoid jargon, focus on core concepts
+      * intermediate: Include some technical terms with explanations, provide context
+      * advanced: Use domain-specific terminology, include nuances and edge cases
+    - Break down complex ideas into digestible parts
+    - Use analogies and examples when helpful
+    - Maintain accuracy while improving accessibility
+  user_prompt_template: |
+    Explain the following concept for a {{audience_level}} level audience:
+    
+    {{concept}}

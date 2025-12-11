@@ -1,0 +1,42 @@
+{
+  "pluginId": "default",
+  "version": "current",
+  "label": "Next",
+  "banner": null,
+  "badge": false,
+  "noIndex": false,
+  "className": "docs-version-current",
+  "isLast": true,
+  "docsSidebars": {
+    "tutorialSidebar": [
+      {
+        "type": "link",
+        "label": "Introduction to AI-Powered Learning",
+        "href": "/docs/intro",
+        "docId": "intro",
+        "unlisted": false
+      },
+      {
+        "type": "link",
+        "label": "Chapter 1: Fundamentals of AI in Education",
+        "href": "/docs/chapter1",
+        "docId": "chapter1",
+        "unlisted": false
+      }
+    ]
+  },
+  "docs": {
+    "chapter1": {
+      "id": "chapter1",
+      "title": "Chapter 1: Fundamentals of AI in Education",
+      "description": "What is AI in Education?",
+      "sidebar": "tutorialSidebar"
+    },
+    "intro": {
+      "id": "intro",
+      "title": "Introduction to AI-Powered Learning",
+      "description": "What You'll Learn",
+      "sidebar": "tutorialSidebar"
+    }
+  }
+}

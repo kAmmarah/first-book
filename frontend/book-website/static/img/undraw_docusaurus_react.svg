@@ -1,0 +1,6 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#f0f0f0"/>
+  <circle cx="100" cy="100" r="50" fill="#2e8555"/>
+  <text x="100" y="100" font-family="Arial" font-size="14" text-anchor="middle" fill="white" dy=".3em">AI</text>
+  <text x="100" y="140" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Multilingual</text>
+</svg>

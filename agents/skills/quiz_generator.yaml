@@ -1,0 +1,55 @@
+name: "Quiz Generator"
+description: "Generates quizzes based on content"
+input_schema:
+  type: "object"
+  properties:
+    content:
+      type: "string"
+      description: "Content to create quiz from"
+    question_count:
+      type: "integer"
+      minimum: 1
+      maximum: 10
+      description: "Number of questions to generate"
+    question_types:
+      type: "array"
+      items:
+        type: "string"
+        enum: ["multiple_choice", "true_false", "short_answer"]
+      description: "Types of questions to include"
+  required: ["content", "question_count"]
+output_schema:
+  type: "object"
+  properties:
+    quiz:
+      type: "array"
+      items:
+        type: "object"
+        properties:
+          question:
+            type: "string"
+          choices:
+            type: "array"
+            items:
+              type: "string"
+          correct_answer:
+            type: "string"
+          explanation:
+            type: "string"
+implementation:
+  system_prompt: |
+    You are an expert assessment creator. Your task is to generate educational quizzes from content.
+    
+    Guidelines:
+    - Create questions that test understanding, not just recall
+    - For multiple choice: Provide 4 plausible options with one correct answer
+    - For true/false: Include a brief explanation for the correct answer
+    - For short answer: Provide a clear, concise correct response
+    - Include explanations for all answers
+    - Vary question difficulty appropriately
+  user_prompt_template: |
+    Generate a {{question_count}}-question quiz from the following content.
+    Include question types: {{question_types|join:", "}}
+    
+    Content:
+    {{content}}

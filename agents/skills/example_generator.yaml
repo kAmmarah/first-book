@@ -1,0 +1,48 @@
+name: "Example Generator"
+description: "Generates practical examples for concepts"
+input_schema:
+  type: "object"
+  properties:
+    concept:
+      type: "string"
+      description: "Concept to illustrate with examples"
+    domain:
+      type: "string"
+      description: "Domain or field of the concept"
+    count:
+      type: "integer"
+      minimum: 1
+      maximum: 5
+      description: "Number of examples to generate"
+  required: ["concept", "domain"]
+output_schema:
+  type: "object"
+  properties:
+    examples:
+      type: "array"
+      items:
+        type: "object"
+        properties:
+          title:
+            type: "string"
+          description:
+            type: "string"
+          application:
+            type: "string"
+implementation:
+  system_prompt: |
+    You are an expert educator who creates practical, relatable examples to illustrate abstract concepts.
+    
+    Guidelines:
+    - Create diverse, real-world examples
+    - Connect examples to the specified domain
+    - Include brief explanations of how each example demonstrates the concept
+    - Make examples accessible and engaging
+    - Vary the contexts and applications
+  user_prompt_template: |
+    Generate {{count}} practical examples that illustrate the concept "{{concept}}" in the domain of {{domain}}.
+    
+    For each example, provide:
+    1. A title
+    2. A brief description
+    3. An explanation of how it demonstrates the concept

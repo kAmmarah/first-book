@@ -1,0 +1,23 @@
+{
+  "id": "intro",
+  "title": "Introduction to AI-Powered Learning",
+  "description": "What You'll Learn",
+  "source": "@site/docs/intro.md",
+  "sourceDirName": ".",
+  "slug": "/intro",
+  "permalink": "/docs/intro",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/kAmmarah/first-book/tree/main/frontend/book-website/docs/intro.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "next": {
+    "title": "Chapter 1: Fundamentals of AI in Education",
+    "permalink": "/docs/chapter1"
+  }
+}
