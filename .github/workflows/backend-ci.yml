@@ -63,8 +63,8 @@ jobs:
         DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
         QDRANT_URL: http://localhost:6333
         SECRET_KEY: test-secret-key
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        QDRANT_API_KEY: ${{ secrets.QDRANT_API_KEY }}
+        OPENAI_API_KEY: sk-test-key
+        QDRANT_API_KEY: test-qdrant-key
     
     - name: Check for syntax errors
       run: python -m py_compile $(find . -name "*.py" -not -path "./venv/*")
