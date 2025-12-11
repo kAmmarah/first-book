@@ -7,7 +7,7 @@ export default {
   "title": "Physical AI & Humanoid Robotics Course",
   "tagline": "Master the fundamentals of Physical AI and Humanoid Robotics",
   "favicon": "img/favicon.ico",
-  "url": "https://first-book-45t7-7v7lzt1qx-ammaras-projects-85ee12e7.vercel.app",
+  "url": "https://first-book.vercel.app",
   "baseUrl": "/",
   "organizationName": "kAmmarah",
   "projectName": "first-book",
