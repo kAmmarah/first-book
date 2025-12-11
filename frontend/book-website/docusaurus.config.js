@@ -12,7 +12,8 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://first-book-45t7-7v7lzt1qx-ammaras-projects-85ee12e7.vercel.app',
+  // This will be automatically set by Vercel during deployment
+  url: process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://first-book.vercel.app',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For Vercel deployment, use '/'
   baseUrl: '/',
