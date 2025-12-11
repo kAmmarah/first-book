@@ -1,0 +1,86 @@
+name: Backend CI/CD
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'backend/api/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'backend/api/**'
+
+jobs:
+  test:
+    name: Test Backend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend/api
+    
+    strategy:
+      matrix:
+        python-version: [3.10, 3.11]
+    
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test_db
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+      
+      qdrant:
+        image: qdrant/qdrant:v1.7.4
+        ports:
+          - 6333:6333
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run tests
+      run: |
+        # Add test commands here when tests are implemented
+        echo "Running tests..."
+      env:
+        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
+        QDRANT_URL: http://localhost:6333
+        SECRET_KEY: test-secret-key
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        QDRANT_API_KEY: ${{ secrets.QDRANT_API_KEY }}
+    
+    - name: Check for syntax errors
+      run: python -m py_compile $(find . -name "*.py" -not -path "./venv/*")
+
+  deploy:
+    name: Deploy Backend
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Deploy to hosting platform
+      run: |
+        echo "Deploying backend to hosting platform..."
+        # Add deployment commands here based on chosen hosting platform
+        # This will depend on where you decide to deploy your backend

@@ -125,6 +125,7 @@ Detailed documentation is available in the `docs/` directory:
 - [Frontend Components](docs/frontend_components.md)
 - [Deployment Guide](docs/deployment.md)
 - [Testing Procedures](docs/testing.md)
+- [CI/CD Setup Guide](docs/ci-cd-setup.md)
 
 ## Contributing
 
