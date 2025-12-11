@@ -29,7 +29,7 @@ An AI-powered interactive book platform with personalization, translation, and c
 ### Infrastructure
 - Docker - Containerization
 - GitHub Actions - CI/CD
-- GitHub Pages - Static site hosting
+- Vercel - Static site hosting and serverless functions
 
 ## Project Structure
 
@@ -57,8 +57,8 @@ An AI-powered interactive book platform with personalization, translation, and c
 
 1. **Clone the repository**:
    ```bash
-   git clone <repository-url>
-   cd ai-interactive-book
+   git clone https://github.com/kAmmarah/FIRST-BOOK.git
+   cd FIRST-BOOK
    ```
 
 2. **Start frontend**:
@@ -84,21 +84,34 @@ An AI-powered interactive book platform with personalization, translation, and c
 
 ### Environment Configuration
 
-Create `.env` files in both frontend and backend directories:
+Create `.env` files in both frontend and backend directories based on the provided `.env.example` files:
 
 **Backend** (`backend/api/.env`):
-```env
-DATABASE_URL=
-SECRET_KEY=your-secret-key
-OPENAI_API_KEY=your-openai-api-key
-QDRANT_URL=your-qdrant-url
-QDRANT_API_KEY=your-qdrant-api-key
-```
+Refer to `backend/api/.env.example` for all required environment variables.
 
 **Frontend** (`frontend/book-website/.env`):
-```env
-REACT_APP_API_BASE_URL=http://localhost:8000
-```
+Refer to `frontend/book-website/.env.example` for all required environment variables.
+
+For production deployments, set the appropriate environment variables in your hosting platform (Vercel for frontend, your cloud provider for backend).
+
+## Deployment
+
+### Frontend Deployment (Vercel)
+1. Connect your GitHub repository to Vercel
+2. Select the `frontend/book-website` directory as the root
+3. Set the build command to `npm run build`
+4. Set the output directory to `build`
+5. Add environment variables as needed (refer to `frontend/book-website/.env.example`)
+
+### Backend Deployment
+The backend can be deployed to various cloud platforms that support Python applications:
+- Vercel (with Serverless Functions)
+- Render
+- Railway
+- Heroku
+- AWS Lambda
+
+Ensure you set all required environment variables from `backend/api/.env.example`.
 
 ## Documentation
 
@@ -128,3 +141,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Contact
 
 For questions or support, please open an issue on GitHub.
+
+## Creator
+
+This project was created by [Ammara Dawood](https://github.com/kAmmarah).
