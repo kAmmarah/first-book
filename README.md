@@ -126,6 +126,7 @@ Detailed documentation is available in the `docs/` directory:
 - [Deployment Guide](docs/deployment.md)
 - [Testing Procedures](docs/testing.md)
 - [CI/CD Setup Guide](docs/ci-cd-setup.md)
+- [Public Deployment Guide](docs/public-deployment.md)
 
 ## Contributing
 
