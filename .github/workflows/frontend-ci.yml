@@ -38,11 +38,9 @@ jobs:
           exit 1
         fi
     
-    - name: Run linter
+    - name: Run tests
       working-directory: frontend/book-website
-      run: |
-        # Skip typecheck for now as there's no tsconfig.json
-        echo "Skipping typecheck - no tsconfig.json found"
+      run: npm test
     
     - name: Build
       working-directory: frontend/book-website
