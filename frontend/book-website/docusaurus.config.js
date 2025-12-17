@@ -9,7 +9,7 @@ const darkCodeTheme = themes.dracula;
 const config = {
   title: 'Physical AI & Humanoid Robotics Course',
   tagline: 'Master the fundamentals of Physical AI and Humanoid Robotics',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/book-favicon.svg',
 
   // Set the production url of your site here
   // This will be automatically set by Vercel during deployment
@@ -24,7 +24,11 @@ const config = {
   projectName: 'first-book', // Usually your repo name.
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -73,8 +77,8 @@ const config = {
       navbar: {
         title: 'Physical AI & Humanoid Robotics Course',
         logo: {
-          alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          alt: 'AI Book Logo',
+          src: 'img/ai-book-logo.svg',
         },
         items: [
           {

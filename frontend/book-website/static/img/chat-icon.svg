@@ -1,0 +1,13 @@
+<svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="chatIconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2E7D32;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <path d="M21,12 C21,8.13 17.87,5 14,5 H6 C4.9,5 4,5.9 4,7 V17 C4,18.1 4.9,19 6,19 H7 L9,21 L11.5,19 H14 C17.87,19 21,15.87 21,12 Z" 
+        fill="url(#chatIconGradient)"/>
+  <circle cx="9" cy="11" r="1" fill="white"/>
+  <circle cx="12" cy="11" r="1" fill="white"/>
+  <circle cx="15" cy="11" r="1" fill="white"/>
+</svg>

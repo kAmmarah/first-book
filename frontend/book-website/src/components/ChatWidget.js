@@ -17,6 +17,19 @@ const ChatWidgetContent = () => {
     // Initialize speech synthesis
     if (typeof window !== 'undefined' && window.speechSynthesis) {
       synthRef.current = window.speechSynthesis;
+      
+      // Load voices when they become available
+      const loadVoices = () => {
+        const voices = synthRef.current.getVoices();
+        console.log('Available voices:', voices);
+      };
+      
+      // Some browsers load voices asynchronously
+      if (synthRef.current.onvoiceschanged !== undefined) {
+        synthRef.current.onvoiceschanged = loadVoices;
+      }
+      
+      loadVoices();
     }
   }, []);
 
@@ -35,17 +48,29 @@ const ChatWidgetContent = () => {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       const recognition = new SpeechRecognition();
       recognition.continuous = false;
-      recognition.interimResults = false;
+      recognition.interimResults = true; // Allow interim results
+      recognition.maxAlternatives = 1;
       recognition.lang = selectedLanguage === 'ur' ? 'ur-PK' : 'en-US';
 
       recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        setInputValue(transcript);
-        setIsListening(false);
+        let finalTranscript = '';
+        let interimTranscript = '';
+        
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            finalTranscript += event.results[i][0].transcript;
+          } else {
+            interimTranscript += event.results[i][0].transcript;
+          }
+        }
+        
+        // Update input with interim results for better UX
+        setInputValue(finalTranscript || interimTranscript);
       };
 
       recognition.onerror = (event) => {
         console.error('Speech recognition error', event.error);
+        alert(`Speech recognition error: ${event.error}`);
         setIsListening(false);
       };
 
@@ -63,37 +88,52 @@ const ChatWidgetContent = () => {
     };
   }, [selectedLanguage]);
 
-  // Demo responses for the chat
-  const getDemoResponse = (input, language) => {
-    const responses = {
-      en: {
-        'hello': 'Hello! How can I help you with the Physical AI & Humanoid Robotics course?',
-        'hi': 'Hi there! Welcome to the AI course. What would you like to learn today?',
-        'chapter 1': 'Chapter 1 covers the fundamentals of Artificial Intelligence. It introduces key concepts like machine learning, neural networks, and the history of AI development.',
-        'what is ai': 'Artificial Intelligence (AI) refers to systems or machines that mimic human intelligence to perform tasks and can iteratively improve themselves based on the information they collect.',
-        'default': 'Thanks for your message! This is a demo response. In a full implementation, this would connect to an AI backend to provide personalized learning assistance.'
-      },
-      ur: {
-        'ہیلو': 'ہیلو! میں آپ کی فزیکل اے آئی اور ہیومینائڈ روبوٹکس کورس میں کس طرح مدد کر سکتا ہوں؟',
-        'ہائی': 'ہائی! اے آئی کورس میں خوش آمدید۔ آج آپ کیا سیکھنا چاہیں گے؟',
-        'باب 1': 'باب 1 مصنوعی ذہانت کے بنیادی اصولوں پر مشتمل ہے۔ یہ مشین لرننگ، نیورل نیٹ ورکس، اور اے آئی کی ترقی کی تاریخ جیسی کلیدی تصورات کا تعارف پیش کرتا ہے۔',
-        'ای آئی کیا ہے': 'مصنوعی ذہانت (ای آئی) ایسے نظام یا مشینوں کو کہتے ہیں جو انسانی ذہانت کی نقل کرتے ہیں تاکہ کام انجام دے سکیں اور ان معلومات کی بنیاد پر خود کو بہتر بناتے رہیں جو وہ جمع کرتی ہیں۔',
-        'ڈیفالٹ': 'آپ کے پیغام کا شکریہ! یہ ایک ڈیمو جواب ہے۔ مکمل نفاذ میں، یہ اے آئی بیک اینڈ سے منسلک ہو کر ذاتی نوعیت کی تعلیمی مدد فراہم کرے گا۔'
-      }
-    };
-
-    const lowerInput = input.toLowerCase();
-    const langResponses = responses[language] || responses.en;
+  // Get current chapter context
+  const getCurrentChapterContext = () => {
+    // Try to find the current chapter title
+    const chapterTitleElement = document.querySelector('h1') || 
+                             document.querySelector('h2') || 
+                             document.querySelector('[class*="title"]') ||
+                             document.querySelector('header h1');
     
-    // Try to find a matching response
-    for (const [key, response] of Object.entries(langResponses)) {
-      if (lowerInput.includes(key)) {
-        return response;
-      }
+    // Try to get the main content
+    const contentElements = [
+      document.querySelector('.markdown'),
+      document.querySelector('[class*="docItemContainer"]'),
+      document.querySelector('article'),
+      document.querySelector('.main-wrapper'),
+      document.querySelector('main')
+    ];
+    
+    // Find the first available content element
+    const contentElement = contentElements.find(el => el !== null);
+    
+    // Get breadcrumbs or navigation info
+    const breadcrumbs = document.querySelector('[class*="breadcrumb"]') || 
+                      document.querySelector('[class*="nav"]') ||
+                      document.querySelector('nav');
+    
+    const chapterTitle = chapterTitleElement ? chapterTitleElement.textContent.trim() : 'Unknown Chapter';
+    const breadcrumbText = breadcrumbs ? breadcrumbs.textContent.trim() : '';
+    
+    // Extract more comprehensive content
+    let content = '';
+    if (contentElement) {
+      // Get text content but exclude navigation and other UI elements
+      const clone = contentElement.cloneNode(true);
+      
+      // Remove common UI elements that shouldn't be part of the context
+      const elementsToRemove = clone.querySelectorAll('nav, header, footer, .navbar, .sidebar, .toc, .table-of-contents');
+      elementsToRemove.forEach(el => el.remove());
+      
+      content = clone.innerText.substring(0, 1500); // Increase context length
     }
     
-    // Return default response
-    return langResponses.default || langResponses['default'];
+    return {
+      chapterTitle,
+      breadcrumbText,
+      content
+    };
   };
 
   const handleSend = async () => {
@@ -110,11 +150,24 @@ const ChatWidgetContent = () => {
     setIsLoading(true);
 
     try {
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Get current chapter context
+      const { chapterTitle, breadcrumbText, content } = getCurrentChapterContext();
       
-      // Get demo response
-      const responseText = getDemoResponse(inputValue, selectedLanguage);
+      // Prepare comprehensive context for the AI
+      const context = `Current Location: ${breadcrumbText}
+Current Chapter: ${chapterTitle}
+
+Relevant Content:
+${content}`;
+      
+      // In a real app, you would get the token from context or state management
+      // For now, we'll use the mock token
+      const token = 'mock-auth-token';
+      
+      // Call the real backend API
+      const response = await apiService.chatWithBot(inputValue, context, token);
+      
+      const responseText = response.response || 'I couldn\'t process that request. Please try again.';
       
       const botMessage = { 
         text: responseText, 
@@ -127,6 +180,7 @@ const ChatWidgetContent = () => {
       // Speak the response
       speakText(responseText, selectedLanguage);
     } catch (error) {
+      console.error('Chat error:', error);
       const errorMessage = { 
         text: 'Sorry, I encountered an error. Please try again.', 
         sender: 'bot',
@@ -161,27 +215,66 @@ const ChatWidgetContent = () => {
       
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = language === 'ur' ? 'ur-PK' : 'en-US';
-      utterance.rate = 1.0;
+      utterance.rate = 0.9; // Slightly slower for better comprehension
       utterance.pitch = 1.0;
+      utterance.volume = 1.0;
       
       // Set voice based on language
       const voices = synthRef.current.getVoices();
       if (voices.length > 0) {
         // Try to find a suitable voice
         let selectedVoice = null;
+        
+        // Sort voices by preference
+        const preferredVoiceNames = language === 'ur' 
+          ? ['Urdu', 'ur', 'PK', 'female'] 
+          : ['Google', 'Microsoft', 'Samantha', 'Alex', 'female'];
+        
+        // First try to match by name
         for (const voice of voices) {
+          const voiceName = voice.name.toLowerCase();
           if (language === 'ur' && (voice.lang.includes('ur') || voice.lang.includes('PK'))) {
-            selectedVoice = voice;
-            break;
+            if (preferredVoiceNames.some(name => voiceName.includes(name.toLowerCase()))) {
+              selectedVoice = voice;
+              break;
+            }
           } else if (language === 'en' && voice.lang.includes('en')) {
-            selectedVoice = voice;
-            break;
+            if (preferredVoiceNames.some(name => voiceName.includes(name.toLowerCase()))) {
+              selectedVoice = voice;
+              break;
+            }
+          }
+        }
+        
+        // If no name match, try language match
+        if (!selectedVoice) {
+          for (const voice of voices) {
+            if (language === 'ur' && (voice.lang.includes('ur') || voice.lang.includes('PK'))) {
+              selectedVoice = voice;
+              break;
+            } else if (language === 'en' && voice.lang.includes('en')) {
+              selectedVoice = voice;
+              break;
+            }
           }
         }
         
         // If no specific voice found, use the first available one
         utterance.voice = selectedVoice || voices[0];
       }
+      
+      // Add event listeners for better UX
+      utterance.onstart = () => {
+        console.log('Speech started');
+      };
+      
+      utterance.onend = () => {
+        console.log('Speech ended');
+      };
+      
+      utterance.onerror = (event) => {
+        console.error('Speech error', event);
+      };
       
       synthRef.current.speak(utterance);
     }
@@ -208,16 +301,27 @@ const ChatWidgetContent = () => {
           position: 'fixed',
           bottom: '20px',
           right: '20px',
-          padding: '10px 15px',
+          padding: '12px 18px',
           backgroundColor: '#2e8555',
           color: 'white',
           border: 'none',
-          borderRadius: '20px',
+          borderRadius: '25px',
           cursor: 'pointer',
           zIndex: 1000,
-          boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+          fontWeight: '500',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '8px'
         }}
       >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
+          <path d="M21,12 C21,8.13 17.87,5 14,5 H6 C4.9,5 4,5.9 4,7 V17 C4,18.1 4.9,19 6,19 H7 L9,21 L11.5,19 H14 C17.87,19 21,15.87 21,12 Z" 
+                fill="white"/>
+          <circle cx="9" cy="11" r="1" fill="#2e8555"/>
+          <circle cx="12" cy="11" r="1" fill="#2e8555"/>
+          <circle cx="15" cy="11" r="1" fill="#2e8555"/>
+        </svg>
         Chat with AI
       </button>
     );
@@ -250,8 +354,16 @@ const ChatWidgetContent = () => {
               border: 'none',
               color: 'white',
               cursor: 'pointer',
-              fontSize: '18px'
+              fontSize: '18px',
+              fontWeight: 'bold',
+              padding: '0',
+              width: '24px',
+              height: '24px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
+            title="Close chat"
           >
             ×
           </button>
@@ -264,27 +376,42 @@ const ChatWidgetContent = () => {
             key={index} 
             className={`chat-message ${message.sender}`}
           >
-            <span>{message.text}</span>
-            {message.sender === 'bot' && (
-              <button
-                onClick={() => speakText(message.text, message.language)}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  color: '#2e8555',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  marginLeft: '10px'
-                }}
-              >
-                🔊
-              </button>
-            )}
+            <span className="message-text">{message.text}</span>
+            <div className="message-actions">
+              {message.sender === 'bot' && (
+                <button
+                  onClick={() => speakText(message.text, message.language)}
+                  title="Listen to this message"
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#2e8555',
+                    cursor: 'pointer',
+                    fontSize: '16px',
+                    padding: '2px'
+                  }}
+                >
+                  🔊
+                </button>
+              )}
+            </div>
           </div>
         ))}
         {isLoading && (
           <div className="chat-message bot">
-            Thinking...
+            <span className="message-text">Thinking...</span>
+            <div className="message-actions">
+              <div 
+                style={{
+                  width: '16px',
+                  height: '16px',
+                  border: '2px solid #f3f3f3',
+                  borderTop: '2px solid #2e8555',
+                  borderRadius: '50%',
+                  animation: 'spin 1s linear infinite'
+                }}
+              />
+            </div>
           </div>
         )}
         <div ref={messagesEndRef} />
@@ -309,8 +436,10 @@ const ChatWidgetContent = () => {
             borderRadius: '4px',
             padding: '8px',
             cursor: 'pointer',
-            marginLeft: '5px'
+            marginLeft: '5px',
+            minWidth: '40px'
           }}
+          title={isListening ? 'Stop listening' : 'Start voice input'}
         >
           {isListening ? '⏹️' : '🎤'}
         </button>

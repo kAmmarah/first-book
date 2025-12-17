@@ -11,6 +11,13 @@ def get_openai_response(system_prompt: str, user_prompt: str, model: str = "gpt-
     """
     Get a response from OpenAI's API
     """
+    # Check if we're in development mode
+    environment = os.getenv("ENVIRONMENT", "development")
+    
+    if environment == "development":
+        # Return a mock response for development
+        return f"This is a mock response to your question: '{user_prompt}'. In a production environment, this would be answered by an AI model."
+    
     try:
         response = openai.ChatCompletion.create(
             model=model,
@@ -30,6 +37,13 @@ def get_embedding(text: str, model: str = "text-embedding-ada-002") -> list:
     """
     Get embeddings for text using OpenAI's embedding API
     """
+    # Check if we're in development mode
+    environment = os.getenv("ENVIRONMENT", "development")
+    
+    if environment == "development":
+        # Return a mock embedding for development
+        return [0.1] * 1536  # Mock embedding vector
+    
     try:
         response = openai.Embedding.create(
             input=text,

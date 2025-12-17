@@ -14,15 +14,22 @@ def process_chat_query(db: Session, user_id: int, query: str, context: str = Non
     user = db.query(User).filter(User.id == user_id).first()
     
     # Prepare the prompt with user context
-    system_prompt = f"""
-    You are an AI assistant helping with an interactive book about AI-powered learning.
-    The user has the following profile:
-    - Software Experience: {user.software_experience}
-    - Hardware Experience: {user.hardware_experience}
-    - Learning Style: {user.learning_style}
-    
-    Please provide helpful, accurate responses to questions about the book content.
-    """
+    if user:
+        system_prompt = f"""
+        You are an AI assistant helping with an interactive book about AI-powered learning.
+        The user has the following profile:
+        - Software Experience: {user.software_experience}
+        - Hardware Experience: {user.hardware_experience}
+        - Learning Style: {user.learning_style}
+        
+        Please provide helpful, accurate responses to questions about the book content.
+        """
+    else:
+        # Default prompt for cases where user is not found
+        system_prompt = """
+        You are an AI assistant helping with an interactive book about AI-powered learning.
+        Please provide helpful, accurate responses to questions about the book content.
+        """
     
     if context:
         prompt = f"""

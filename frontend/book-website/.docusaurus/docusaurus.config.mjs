@@ -6,12 +6,29 @@
 export default {
   "title": "Physical AI & Humanoid Robotics Course",
   "tagline": "Master the fundamentals of Physical AI and Humanoid Robotics",
-  "favicon": "img/favicon.ico",
+  "favicon": "img/book-favicon.svg",
   "url": "https://first-book.vercel.app",
   "baseUrl": "/",
   "organizationName": "kAmmarah",
   "projectName": "first-book",
   "onBrokenLinks": "throw",
+  "markdown": {
+    "hooks": {
+      "onBrokenMarkdownLinks": "warn",
+      "onBrokenMarkdownImages": "throw"
+    },
+    "format": "mdx",
+    "mermaid": false,
+    "emoji": true,
+    "mdx1Compat": {
+      "comments": true,
+      "admonitions": true,
+      "headingIds": true
+    },
+    "anchors": {
+      "maintainCase": false
+    }
+  },
   "i18n": {
     "defaultLocale": "en",
     "locales": [
@@ -25,7 +42,7 @@ export default {
       "classic",
       {
         "docs": {
-          "sidebarPath": "/Users/ammarah/first-book/frontend/book-website/sidebars.js",
+          "sidebarPath": "/Users/ammarah/first-book/FIRST-BOOK/frontend/book-website/sidebars.js",
           "editUrl": "https://github.com/kAmmarah/first-book/tree/main/frontend/book-website/"
         },
         "blog": {
@@ -33,7 +50,7 @@ export default {
           "editUrl": "https://github.com/kAmmarah/first-book/tree/main/frontend/book-website/"
         },
         "theme": {
-          "customCss": "/Users/ammarah/first-book/frontend/book-website/src/css/custom.css"
+          "customCss": "/Users/ammarah/first-book/FIRST-BOOK/frontend/book-website/src/css/custom.css"
         }
       }
     ]
@@ -43,8 +60,8 @@ export default {
     "navbar": {
       "title": "Physical AI & Humanoid Robotics Course",
       "logo": {
-        "alt": "My Site Logo",
-        "src": "img/logo.svg"
+        "alt": "AI Book Logo",
+        "src": "img/ai-book-logo.svg"
       },
       "items": [
         {
@@ -365,22 +382,5 @@ export default {
   "stylesheets": [],
   "clientModules": [],
   "titleDelimiter": "|",
-  "noIndex": false,
-  "markdown": {
-    "format": "mdx",
-    "mermaid": false,
-    "emoji": true,
-    "mdx1Compat": {
-      "comments": true,
-      "admonitions": true,
-      "headingIds": true
-    },
-    "anchors": {
-      "maintainCase": false
-    },
-    "hooks": {
-      "onBrokenMarkdownLinks": "warn",
-      "onBrokenMarkdownImages": "throw"
-    }
-  }
+  "noIndex": false
 };
