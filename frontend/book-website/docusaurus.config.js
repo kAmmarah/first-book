@@ -15,8 +15,8 @@ const config = {
   // This will be automatically set by Vercel during deployment
   url: process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://first-book.vercel.app',
   // Set the /<baseUrl>/ pathname under which your site is served
-  // For local development, use '/first-book/'
-  baseUrl: '/first-book/',
+  // For Vercel deployment, use '/'
+  baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
