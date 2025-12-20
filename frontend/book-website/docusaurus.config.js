@@ -15,8 +15,8 @@ const config = {
   // This will be automatically set by Vercel during deployment
   url: process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://first-book.vercel.app',
   // Set the /<baseUrl>/ pathname under which your site is served
-  // For Vercel deployment, use '/'
-  baseUrl: '/',
+  // For local development, use '/first-book/'
+  baseUrl: '/first-book/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -78,7 +78,7 @@ const config = {
         title: 'Physical AI & Humanoid Robotics Course',
         logo: {
           alt: 'AI Book Logo',
-          src: 'img/ai-book-logo.svg',
+          src: 'img/ai-book-logo-animated.svg',
         },
         items: [
           {

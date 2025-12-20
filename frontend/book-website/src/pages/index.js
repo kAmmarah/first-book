@@ -13,6 +13,14 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
+        {/* Full animated logo with features */}
+        <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'center' }}>
+          <img 
+            src="/img/ai-book-logo-full.svg" 
+            alt="AI Book Logo" 
+            style={{ maxWidth: '100%', height: 'auto' }}
+          />
+        </div>
         <h1 className="hero__title">{siteConfig.title}</h1>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>

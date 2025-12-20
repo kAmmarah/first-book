@@ -9,9 +9,11 @@ const ChatWidgetContent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('en'); // 'en' for English, 'ur' for Urdu
+  const [isSpeaking, setIsSpeaking] = useState(false); // Track if speech is currently playing
   const recognitionRef = useRef(null);
   const messagesEndRef = useRef(null);
   const synthRef = useRef(null);
+  const utteranceRef = useRef(null); // Reference to current utterance
 
   useEffect(() => {
     // Initialize speech synthesis
@@ -82,11 +84,28 @@ const ChatWidgetContent = () => {
     }
 
     return () => {
+      // Cleanup function - stop speech and recognition when component unmounts
+      if (synthRef.current) {
+        synthRef.current.cancel();
+      }
       if (recognitionRef.current) {
         recognitionRef.current.stop();
       }
     };
   }, [selectedLanguage]);
+
+  // Effect to stop speech when chat is closed
+  useEffect(() => {
+    if (!isOpen) {
+      // Stop any ongoing speech when chat is closed
+      stopSpeech();
+      // Stop any ongoing voice recognition
+      if (recognitionRef.current && isListening) {
+        recognitionRef.current.stop();
+        setIsListening(false);
+      }
+    }
+  }, [isOpen, isListening]);
 
   // Get current chapter context
   const getCurrentChapterContext = () => {
@@ -214,8 +233,31 @@ ${content}`;
       synthRef.current.cancel();
       
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = language === 'ur' ? 'ur-PK' : 'en-US';
-      utterance.rate = 0.9; // Slightly slower for better comprehension
+      utteranceRef.current = utterance; // Store reference
+      
+      // Set language - enhanced support for Urdu
+      if (language === 'ur') {
+        // Try multiple Urdu language codes for better compatibility
+        const urduLangCodes = ['ur-PK', 'ur-IN', 'ur'];
+        let langSet = false;
+        for (const langCode of urduLangCodes) {
+          try {
+            utterance.lang = langCode;
+            langSet = true;
+            break;
+          } catch (e) {
+            console.warn(`Could not set language to ${langCode}`);
+          }
+        }
+        if (!langSet) {
+          utterance.lang = 'ur-PK'; // fallback
+        }
+      } else {
+        utterance.lang = 'en-US';
+      }
+      
+      // Adjust speech parameters for better Urdu pronunciation
+      utterance.rate = language === 'ur' ? 0.8 : 0.9; // Slightly slower for Urdu
       utterance.pitch = 1.0;
       utterance.volume = 1.0;
       
@@ -225,18 +267,21 @@ ${content}`;
         // Try to find a suitable voice
         let selectedVoice = null;
         
-        // Sort voices by preference
+        // Sort voices by preference - enhanced for Urdu
         const preferredVoiceNames = language === 'ur' 
-          ? ['Urdu', 'ur', 'PK', 'female'] 
+          ? ['Urdu', 'ur', 'PK', 'IN', 'female', 'Google', 'Microsoft'] 
           : ['Google', 'Microsoft', 'Samantha', 'Alex', 'female'];
         
         // First try to match by name
         for (const voice of voices) {
           const voiceName = voice.name.toLowerCase();
-          if (language === 'ur' && (voice.lang.includes('ur') || voice.lang.includes('PK'))) {
-            if (preferredVoiceNames.some(name => voiceName.includes(name.toLowerCase()))) {
+          if (language === 'ur' && (voice.lang.includes('ur') || voice.lang.includes('PK') || voice.lang.includes('IN'))) {
+            // Prioritize female voices for Urdu as they tend to sound more natural
+            if (voiceName.includes('female') || voiceName.includes('woman')) {
               selectedVoice = voice;
               break;
+            } else if (preferredVoiceNames.some(name => voiceName.includes(name.toLowerCase()))) {
+              selectedVoice = voice;
             }
           } else if (language === 'en' && voice.lang.includes('en')) {
             if (preferredVoiceNames.some(name => voiceName.includes(name.toLowerCase()))) {
@@ -249,10 +294,20 @@ ${content}`;
         // If no name match, try language match
         if (!selectedVoice) {
           for (const voice of voices) {
-            if (language === 'ur' && (voice.lang.includes('ur') || voice.lang.includes('PK'))) {
+            if (language === 'ur' && (voice.lang.includes('ur') || voice.lang.includes('PK') || voice.lang.includes('IN'))) {
               selectedVoice = voice;
               break;
             } else if (language === 'en' && voice.lang.includes('en')) {
+              selectedVoice = voice;
+              break;
+            }
+          }
+        }
+        
+        // If still no specific voice found, try to find any Urdu voice
+        if (!selectedVoice && language === 'ur') {
+          for (const voice of voices) {
+            if (voice.lang.startsWith('ur')) {
               selectedVoice = voice;
               break;
             }
@@ -265,18 +320,32 @@ ${content}`;
       
       // Add event listeners for better UX
       utterance.onstart = () => {
-        console.log('Speech started');
+        console.log('Speech started with voice:', utterance.voice ? utterance.voice.name : 'default');
+        setIsSpeaking(true);
       };
       
       utterance.onend = () => {
         console.log('Speech ended');
+        setIsSpeaking(false);
+        utteranceRef.current = null;
       };
       
       utterance.onerror = (event) => {
         console.error('Speech error', event);
+        setIsSpeaking(false);
+        utteranceRef.current = null;
       };
       
       synthRef.current.speak(utterance);
+    }
+  };
+
+  // Stop current speech
+  const stopSpeech = () => {
+    if (synthRef.current) {
+      synthRef.current.cancel();
+      setIsSpeaking(false);
+      utteranceRef.current = null;
     }
   };
 
@@ -290,6 +359,17 @@ ${content}`;
       e.preventDefault();
       handleSend();
     }
+  };
+
+  const handleClose = () => {
+    // Stop any ongoing speech when closing the chat
+    stopSpeech();
+    // Stop any ongoing voice recognition
+    if (recognitionRef.current && isListening) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    }
+    setIsOpen(false);
   };
 
   if (!isOpen) {
@@ -348,7 +428,7 @@ ${content}`;
             {selectedLanguage === 'en' ? 'اردو' : 'English'}
           </button>
           <button 
-            onClick={() => setIsOpen(false)}
+            onClick={handleClose}
             style={{
               background: 'none',
               border: 'none',
@@ -388,10 +468,28 @@ ${content}`;
                     color: '#2e8555',
                     cursor: 'pointer',
                     fontSize: '16px',
-                    padding: '2px'
+                    padding: '2px',
+                    marginRight: '5px'
                   }}
                 >
                   🔊
+                </button>
+              )}
+              {message.sender === 'bot' && isSpeaking && (
+                <button
+                  onClick={stopSpeech}
+                  title="Stop speaking"
+                  style={{
+                    background: '#ff6b6b',
+                    border: 'none',
+                    color: 'white',
+                    cursor: 'pointer',
+                    fontSize: '12px',
+                    padding: '2px 6px',
+                    borderRadius: '3px'
+                  }}
+                >
+                  ⏹️
                 </button>
               )}
             </div>
