@@ -5,7 +5,7 @@
   "source": "@site/docs/chapter1.md",
   "sourceDirName": ".",
   "slug": "/chapter1",
-  "permalink": "/first-book/docs/chapter1",
+  "permalink": "/docs/chapter1",
   "draft": false,
   "unlisted": false,
   "editUrl": "https://github.com/kAmmarah/first-book/tree/main/frontend/book-website/docs/chapter1.md",
@@ -18,6 +18,6 @@
   "sidebar": "tutorialSidebar",
   "previous": {
     "title": "Introduction to AI-Powered Learning",
-    "permalink": "/first-book/docs/intro"
+    "permalink": "/docs/intro"
   }
 }

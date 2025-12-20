@@ -1,5 +1,5 @@
 {
-  "permalink": "/first-book/blog/welcome",
+  "permalink": "/blog/welcome",
   "editUrl": "https://github.com/kAmmarah/first-book/tree/main/frontend/book-website/blog/2025-01-01-welcome.md",
   "source": "@site/blog/2025-01-01-welcome.md",
   "title": "Welcome to Our AI Learning Platform",
@@ -9,17 +9,17 @@
     {
       "inline": true,
       "label": "ai",
-      "permalink": "/first-book/blog/tags/ai"
+      "permalink": "/blog/tags/ai"
     },
     {
       "inline": true,
       "label": "education",
-      "permalink": "/first-book/blog/tags/education"
+      "permalink": "/blog/tags/education"
     },
     {
       "inline": true,
       "label": "personalization",
-      "permalink": "/first-book/blog/tags/personalization"
+      "permalink": "/blog/tags/personalization"
     }
   ],
   "readingTime": 0.83,
@@ -29,7 +29,7 @@
       "name": "AI Learning Team",
       "title": "creators of the Physical AI & Humanoid Robotics Course",
       "url": "https://github.com/kAmmarah",
-      "imageURL": "/first-book/img/logo.svg",
+      "imageURL": "/img/logo.svg",
       "key": "ai-team",
       "page": null
     }

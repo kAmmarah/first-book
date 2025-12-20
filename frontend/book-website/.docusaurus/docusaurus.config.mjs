@@ -8,7 +8,7 @@ export default {
   "tagline": "Master the fundamentals of Physical AI and Humanoid Robotics",
   "favicon": "img/book-favicon.svg",
   "url": "https://first-book.vercel.app",
-  "baseUrl": "/first-book/",
+  "baseUrl": "/",
   "organizationName": "kAmmarah",
   "projectName": "first-book",
   "onBrokenLinks": "throw",

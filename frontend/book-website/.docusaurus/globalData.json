@@ -1,23 +1,23 @@
 {
   "docusaurus-plugin-content-docs": {
     "default": {
-      "path": "/first-book/docs",
+      "path": "/docs",
       "versions": [
         {
           "name": "current",
           "label": "Next",
           "isLast": true,
-          "path": "/first-book/docs",
+          "path": "/docs",
           "mainDocId": "intro",
           "docs": [
             {
               "id": "chapter1",
-              "path": "/first-book/docs/chapter1",
+              "path": "/docs/chapter1",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "intro",
-              "path": "/first-book/docs/intro",
+              "path": "/docs/intro",
               "sidebar": "tutorialSidebar"
             }
           ],
@@ -25,7 +25,7 @@
           "sidebars": {
             "tutorialSidebar": {
               "link": {
-                "path": "/first-book/docs/intro",
+                "path": "/docs/intro",
                 "label": "intro"
               }
             }
