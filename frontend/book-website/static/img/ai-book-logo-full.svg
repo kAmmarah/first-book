@@ -1,0 +1,83 @@
+<svg width="400" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2e8555;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e6b47;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="brainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4fc3f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#29b6f6;stop-opacity:1" />
+    </linearGradient>
+    <!-- Animation for neural connections -->
+    <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.2" />
+      <stop offset="50%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.2" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main rectangle background -->
+  <rect x="0" y="0" width="400" height="200" rx="20" fill="url(#bgGradient)" />
+  
+  <!-- Left side: Animated Brain-like circuit pattern -->
+  <g transform="translate(60, 60)">
+    <circle cx="0" cy="0" r="50" fill="url(#brainGradient)" opacity="0.9">
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Animated Brain-like circuit pattern -->
+    <path d="M-20,-15 
+             C-15,-20 -5,-20 0,-15 
+             C5,-20 15,-20 20,-15 
+             C25,-10 25,0 20,5 
+             C15,10 5,10 0,5 
+             C-5,10 -15,10 -20,5 
+             C-25,0 -25,-10 -20,-15Z" 
+          fill="url(#brainGradient)" opacity="0.9">
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Animated Neural connections -->
+    <line x1="-15" y1="-10" x2="-5" y2="-5" stroke="url(#connectionGradient)" stroke-width="1.5">
+      <animate attributeName="stroke-opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite" />
+    </line>
+    <line x1="-5" y1="-5" x2="5" y2="-10" stroke="url(#connectionGradient)" stroke-width="1.5">
+      <animate attributeName="stroke-opacity" values="0.3;1;0.3" dur="2.5s" repeatCount="indefinite" />
+    </line>
+    <line x1="5" y1="-10" x2="15" y2="-5" stroke="url(#connectionGradient)" stroke-width="1.5">
+      <animate attributeName="stroke-opacity" values="0.3;1;0.3" dur="1.8s" repeatCount="indefinite" />
+    </line>
+    <line x1="-15" y1="0" x2="-5" y2="5" stroke="url(#connectionGradient)" stroke-width="1.5">
+      <animate attributeName="stroke-opacity" values="0.3;1;0.3" dur="2.2s" repeatCount="indefinite" />
+    </line>
+    <line x1="-5" y1="5" x2="5" y2="0" stroke="url(#connectionGradient)" stroke-width="1.5">
+      <animate attributeName="stroke-opacity" values="0.3;1;0.3" dur="1.9s" repeatCount="indefinite" />
+    </line>
+    <line x1="5" y1="0" x2="15" y2="5" stroke="url(#connectionGradient)" stroke-width="1.5">
+      <animate attributeName="stroke-opacity" values="0.3;1;0.3" dur="2.1s" repeatCount="indefinite" />
+    </line>
+    
+    <!-- Decorative elements with animation -->
+    <circle cx="-15" cy="-15" r="2" fill="white" opacity="0.8">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="15" cy="-15" r="2" fill="white" opacity="0.8">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="1.7s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="-15" cy="15" r="2" fill="white" opacity="0.8">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="1.9s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="15" cy="15" r="2" fill="white" opacity="0.8">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="1.3s" repeatCount="indefinite" />
+    </circle>
+  </g>
+  
+  <!-- Right side: Text content -->
+  <text x="140" y="50" font-family="Arial, sans-serif" font-weight="bold" font-size="20" fill="white">AI-Powered Personalization</text>
+  <text x="140" y="85" font-family="Arial, sans-serif" font-weight="bold" font-size="20" fill="white">Interactive Learning</text>
+  <text x="140" y="120" font-family="Arial, sans-serif" font-weight="bold" font-size="20" fill="white">Multilingual Support</text>
+  
+  <!-- Creator attribution -->
+  <text x="200" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="rgba(255,255,255,0.7)">Created by Ammara Dawood</text>
+</svg>

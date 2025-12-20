@@ -8,7 +8,7 @@ export default {
   "tagline": "Master the fundamentals of Physical AI and Humanoid Robotics",
   "favicon": "img/book-favicon.svg",
   "url": "https://first-book.vercel.app",
-  "baseUrl": "/",
+  "baseUrl": "/first-book/",
   "organizationName": "kAmmarah",
   "projectName": "first-book",
   "onBrokenLinks": "throw",
@@ -42,7 +42,7 @@ export default {
       "classic",
       {
         "docs": {
-          "sidebarPath": "/Users/ammarah/first-book/FIRST-BOOK/frontend/book-website/sidebars.js",
+          "sidebarPath": "/Users/ammarah/first-book/frontend/book-website/sidebars.js",
           "editUrl": "https://github.com/kAmmarah/first-book/tree/main/frontend/book-website/"
         },
         "blog": {
@@ -50,7 +50,7 @@ export default {
           "editUrl": "https://github.com/kAmmarah/first-book/tree/main/frontend/book-website/"
         },
         "theme": {
-          "customCss": "/Users/ammarah/first-book/FIRST-BOOK/frontend/book-website/src/css/custom.css"
+          "customCss": "/Users/ammarah/first-book/frontend/book-website/src/css/custom.css"
         }
       }
     ]
@@ -61,7 +61,7 @@ export default {
       "title": "Physical AI & Humanoid Robotics Course",
       "logo": {
         "alt": "AI Book Logo",
-        "src": "img/ai-book-logo.svg"
+        "src": "img/ai-book-logo-animated.svg"
       },
       "items": [
         {

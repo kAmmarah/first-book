@@ -3,101 +3,101 @@ import ComponentCreator from '@docusaurus/ComponentCreator';
 
 export default [
   {
-    path: '/__docusaurus/debug',
-    component: ComponentCreator('/__docusaurus/debug', '5ff'),
+    path: '/first-book/__docusaurus/debug',
+    component: ComponentCreator('/first-book/__docusaurus/debug', 'e25'),
     exact: true
   },
   {
-    path: '/__docusaurus/debug/config',
-    component: ComponentCreator('/__docusaurus/debug/config', '5ba'),
+    path: '/first-book/__docusaurus/debug/config',
+    component: ComponentCreator('/first-book/__docusaurus/debug/config', 'cc9'),
     exact: true
   },
   {
-    path: '/__docusaurus/debug/content',
-    component: ComponentCreator('/__docusaurus/debug/content', 'a2b'),
+    path: '/first-book/__docusaurus/debug/content',
+    component: ComponentCreator('/first-book/__docusaurus/debug/content', '94e'),
     exact: true
   },
   {
-    path: '/__docusaurus/debug/globalData',
-    component: ComponentCreator('/__docusaurus/debug/globalData', 'c3c'),
+    path: '/first-book/__docusaurus/debug/globalData',
+    component: ComponentCreator('/first-book/__docusaurus/debug/globalData', 'bbb'),
     exact: true
   },
   {
-    path: '/__docusaurus/debug/metadata',
-    component: ComponentCreator('/__docusaurus/debug/metadata', '156'),
+    path: '/first-book/__docusaurus/debug/metadata',
+    component: ComponentCreator('/first-book/__docusaurus/debug/metadata', '147'),
     exact: true
   },
   {
-    path: '/__docusaurus/debug/registry',
-    component: ComponentCreator('/__docusaurus/debug/registry', '88c'),
+    path: '/first-book/__docusaurus/debug/registry',
+    component: ComponentCreator('/first-book/__docusaurus/debug/registry', '57c'),
     exact: true
   },
   {
-    path: '/__docusaurus/debug/routes',
-    component: ComponentCreator('/__docusaurus/debug/routes', '000'),
+    path: '/first-book/__docusaurus/debug/routes',
+    component: ComponentCreator('/first-book/__docusaurus/debug/routes', '15b'),
     exact: true
   },
   {
-    path: '/blog',
-    component: ComponentCreator('/blog', 'df4'),
+    path: '/first-book/blog',
+    component: ComponentCreator('/first-book/blog', 'e2d'),
     exact: true
   },
   {
-    path: '/blog/archive',
-    component: ComponentCreator('/blog/archive', '182'),
+    path: '/first-book/blog/archive',
+    component: ComponentCreator('/first-book/blog/archive', '115'),
     exact: true
   },
   {
-    path: '/blog/authors',
-    component: ComponentCreator('/blog/authors', '0b7'),
+    path: '/first-book/blog/authors',
+    component: ComponentCreator('/first-book/blog/authors', '1af'),
     exact: true
   },
   {
-    path: '/blog/tags',
-    component: ComponentCreator('/blog/tags', '287'),
+    path: '/first-book/blog/tags',
+    component: ComponentCreator('/first-book/blog/tags', '1c5'),
     exact: true
   },
   {
-    path: '/blog/tags/ai',
-    component: ComponentCreator('/blog/tags/ai', '90f'),
+    path: '/first-book/blog/tags/ai',
+    component: ComponentCreator('/first-book/blog/tags/ai', '720'),
     exact: true
   },
   {
-    path: '/blog/tags/education',
-    component: ComponentCreator('/blog/tags/education', '57a'),
+    path: '/first-book/blog/tags/education',
+    component: ComponentCreator('/first-book/blog/tags/education', '1ec'),
     exact: true
   },
   {
-    path: '/blog/tags/personalization',
-    component: ComponentCreator('/blog/tags/personalization', 'cc0'),
+    path: '/first-book/blog/tags/personalization',
+    component: ComponentCreator('/first-book/blog/tags/personalization', '615'),
     exact: true
   },
   {
-    path: '/blog/welcome',
-    component: ComponentCreator('/blog/welcome', 'bbd'),
+    path: '/first-book/blog/welcome',
+    component: ComponentCreator('/first-book/blog/welcome', '7af'),
     exact: true
   },
   {
-    path: '/docs',
-    component: ComponentCreator('/docs', 'a89'),
+    path: '/first-book/docs',
+    component: ComponentCreator('/first-book/docs', '00b'),
     routes: [
       {
-        path: '/docs',
-        component: ComponentCreator('/docs', '4ca'),
+        path: '/first-book/docs',
+        component: ComponentCreator('/first-book/docs', 'de5'),
         routes: [
           {
-            path: '/docs',
-            component: ComponentCreator('/docs', '4ab'),
+            path: '/first-book/docs',
+            component: ComponentCreator('/first-book/docs', 'aa8'),
             routes: [
               {
-                path: '/docs/chapter1',
-                component: ComponentCreator('/docs/chapter1', '397'),
+                path: '/first-book/docs/chapter1',
+                component: ComponentCreator('/first-book/docs/chapter1', 'b62'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               },
               {
-                path: '/docs/intro',
-                component: ComponentCreator('/docs/intro', '61d'),
+                path: '/first-book/docs/intro',
+                component: ComponentCreator('/first-book/docs/intro', '94c'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               }
@@ -108,8 +108,8 @@ export default [
     ]
   },
   {
-    path: '/',
-    component: ComponentCreator('/', '2e1'),
+    path: '/first-book/',
+    component: ComponentCreator('/first-book/', '5f4'),
     exact: true
   },
   {

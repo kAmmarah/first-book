@@ -103,15 +103,50 @@ For production deployments, set the appropriate environment variables in your ho
 4. Set the output directory to `build`
 5. Add environment variables as needed (refer to `frontend/book-website/.env.example`)
 
-### Backend Deployment
-The backend can be deployed to various cloud platforms that support Python applications:
-- Vercel (with Serverless Functions)
-- Render
-- Railway
-- Heroku
-- AWS Lambda
+### Backend Deployment Options
 
-Ensure you set all required environment variables from `backend/api/.env.example`.
+#### Option 1: Deploy to Render (Recommended)
+1. Go to https://render.com/
+2. Create a new Web Service
+3. Connect your GitHub repository
+4. Set the root directory to `/backend`
+5. Set the build command to:
+   ```
+   pip install --no-cache-dir --upgrade -r api/requirements.txt
+   ```
+6. Set the start command to:
+   ```
+   uvicorn api.main:app --host 0.0.0.0 --port $PORT
+   ```
+
+#### Option 2: Deploy Backend as Serverless Functions on Vercel
+The project includes Vercel serverless functions in the `/api` directory:
+- `/api/chat` - Handles chat requests
+- `/api/health` - Health check endpoint
+
+See `docs/vercel-deployment-instructions.md` for detailed deployment instructions.
+
+### Environment Variables for Production
+
+**Frontend** (Vercel):
+```
+REACT_APP_API_BASE_URL=https://your-backend-url.vercel.app
+ENABLE_MOCK_DATA=false
+```
+
+**Backend** (Render/Vercel):
+```
+DATABASE_URL=your-postgresql-database-url
+SECRET_KEY=generate-a-secure-secret-key
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+OPENAI_API_KEY=your-openai-api-key-from-platform.openai.com
+QDRANT_URL=your-qdrant-cloud-url
+QDRANT_API_KEY=your-qdrant-api-key
+BETTER_AUTH_SECRET=generate-another-secure-secret
+FRONTEND_URL=https://your-vercel-frontend.vercel.app
+ENVIRONMENT=production
+```
 
 ## Documentation
 
@@ -128,6 +163,7 @@ Detailed documentation is available in the `docs/` directory:
 - [CI/CD Setup Guide](docs/ci-cd-setup.md)
 - [Public Deployment Guide](docs/public-deployment.md)
 - [Vercel Deployment Fix Guide](docs/vercel-deployment-fix.md)
+- [Vercel Deployment Instructions](docs/vercel-deployment-instructions.md)
 
 ## Contributing
 

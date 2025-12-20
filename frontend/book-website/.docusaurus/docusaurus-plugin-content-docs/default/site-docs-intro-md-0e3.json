@@ -5,7 +5,7 @@
   "source": "@site/docs/intro.md",
   "sourceDirName": ".",
   "slug": "/intro",
-  "permalink": "/docs/intro",
+  "permalink": "/first-book/docs/intro",
   "draft": false,
   "unlisted": false,
   "editUrl": "https://github.com/kAmmarah/first-book/tree/main/frontend/book-website/docs/intro.md",
@@ -18,6 +18,6 @@
   "sidebar": "tutorialSidebar",
   "next": {
     "title": "Chapter 1: Fundamentals of AI in Education",
-    "permalink": "/docs/chapter1"
+    "permalink": "/first-book/docs/chapter1"
   }
 }
